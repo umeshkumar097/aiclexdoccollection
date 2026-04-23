@@ -55,7 +55,7 @@ export default function LoginPage() {
         <div className="glass-card p-8 md:p-10 rounded-3xl">
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold tracking-tight text-foreground mb-2">
-              CruxDoc Portal
+              AICLEX Portal
             </h1>
             <p className="text-muted-foreground text-sm uppercase tracking-widest font-medium">
               Admin Access
@@ -123,7 +123,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-8 text-center text-muted-foreground/60 text-[10px] uppercase tracking-tighter">
-            © 2026 CruxDoc Technologies. All rights reserved.
+            © 2026 AICLEX Technologies. All rights reserved.
           </div>
         </div>
       </div>

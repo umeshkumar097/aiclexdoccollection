@@ -22,7 +22,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           const { email, password } = parsedCredentials.data;
 
           // DIRECT BYPASS for the initial admin access (DB-resilient fallback)
-          if (email === "admin@cruxdoc.com" && password === "Aiclex123") {
+          if (email === "admin@aiclex.in" && password === "Aiclex123") {
             try {
               // We still attempt to find/create in DB so candidate links work later,
               // but we return a valid user object regardless to UNBLOCK the user now.
@@ -30,8 +30,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               if (!user) {
                 user = await prisma.user.create({
                   data: {
-                    email: "admin@cruxdoc.com",
-                    name: "Crux Admin",
+                    email: "admin@aiclex.in",
+                    name: "AICLEX Admin",
                     role: "ADMIN",
                   },
                 });
@@ -41,8 +41,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               console.error("Database connection failure, returning guest session:", err);
               return { 
                 id: "admin-guest", 
-                email: "admin@cruxdoc.com", 
-                name: "Admin (Fallback)", 
+                email: "admin@aiclex.in", 
+                name: "AICLEX Admin (Fallback)", 
                 role: "ADMIN" 
               };
             }

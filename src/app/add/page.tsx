@@ -133,7 +133,7 @@ export default function AddAddressPage() {
           </CardHeader>
           <CardContent className="p-10 pt-6">
              <div className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-300">
-                &copy; {new Date().getFullYear()} CRUXDOC SECURE INFRA
+                &copy; {new Date().getFullYear()} AICLEX SECURE INFRA
              </div>
           </CardContent>
         </Card>
@@ -171,7 +171,7 @@ export default function AddAddressPage() {
                 SUBMIT ANOTHER LOG
             </Button>
             <p className="mt-8 text-[9px] font-black uppercase tracking-[0.2em] text-slate-300">
-                &copy; {new Date().getFullYear()} CRUXDOC SECURE INFRA
+                &copy; {new Date().getFullYear()} AICLEX SECURE INFRA
             </p>
           </CardContent>
         </Card>
@@ -420,7 +420,7 @@ export default function AddAddressPage() {
       
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity pointer-events-none">
         <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-slate-400 whitespace-nowrap">
-            &copy; {new Date().getFullYear()} CRUXDOC ENTERPRISE &bull; SECURE DATA INFRASTRUCTURE
+            &copy; {new Date().getFullYear()} AICLEX ENTERPRISE &bull; SECURE DATA INFRASTRUCTURE
         </p>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { AdminManagementClient } from "./client";
 import prisma from "@/lib/prisma";
 
 export const metadata = {
-  title: 'Organization Management | CruxDoc',
+  title: 'Organization Management | AICLEX',
 }
 
 export default async function VendorsPage() {

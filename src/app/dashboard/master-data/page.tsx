@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { MasterDataUpload } from "@/components/master-data-upload";
 
 export const metadata = {
-  title: 'Master Data Upload | CruxDoc',
+  title: 'Master Data Upload | AICLEX',
 }
 
 export default async function MasterDataPage() {

@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CruxDoc | Documents Portal",
-  description: "Secure candidate document collection and validation",
+  title: "AICLEX | Secure Documents Portal",
+  description: "Advanced candidate document collection and multi-tier validation",
 };
 
 export default function RootLayout({

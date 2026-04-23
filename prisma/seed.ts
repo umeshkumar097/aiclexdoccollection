@@ -1,6 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcryptjs");
-const prisma = new PrismaClient();
+import prisma from "../src/lib/prisma";
+import bcrypt from "bcryptjs";
 
 async function main() {
   const email = "admin@aiclex.in";
@@ -16,10 +15,14 @@ async function main() {
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect();
+    // @ts-ignore
+    if (prisma.$disconnect) {
+      // @ts-ignore
+      await prisma.$disconnect();
+    }
   });

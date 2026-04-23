@@ -124,8 +124,8 @@ export function CandidateFormPublic({ clientId, clientName }: CandidateFormPubli
   useEffect(() => {
     const initSession = async () => {
       try {
-        const storedToken = localStorage.getItem("cruxdoc_token");
-        const storedId = localStorage.getItem("cruxdoc_id");
+        const storedToken = localStorage.getItem("aiclex_token");
+        const storedId = localStorage.getItem("aiclex_id");
         
         if (storedToken && storedId) {
           const pingRes = await fetch(`/api/candidate/${storedToken}/heartbeat`, { 
@@ -148,8 +148,8 @@ export function CandidateFormPublic({ clientId, clientName }: CandidateFormPubli
             setIsInitializing(false);
             return;
           } else {
-            localStorage.removeItem("cruxdoc_token");
-            localStorage.removeItem("cruxdoc_id");
+            localStorage.removeItem("aiclex_token");
+            localStorage.removeItem("aiclex_id");
           }
         }
 
@@ -161,8 +161,8 @@ export function CandidateFormPublic({ clientId, clientName }: CandidateFormPubli
         const data = await res.json();
         
         if (data.success) {
-          localStorage.setItem("cruxdoc_token", data.candidate.token);
-          localStorage.setItem("cruxdoc_id", data.candidate.id);
+          localStorage.setItem("aiclex_token", data.candidate.token);
+          localStorage.setItem("aiclex_id", data.candidate.id);
           setToken(data.candidate.token);
           setCandidateId(data.candidate.id);
           if (data.clientConfig) setConfig(data.clientConfig);
@@ -270,8 +270,8 @@ export function CandidateFormPublic({ clientId, clientName }: CandidateFormPubli
             const ext = result.existingCandidate;
             setToken(ext.token);
             setCandidateId(ext.id);
-            localStorage.setItem("cruxdoc_token", ext.token);
-            localStorage.setItem("cruxdoc_id", ext.id);
+            localStorage.setItem("aiclex_token", ext.token);
+            localStorage.setItem("aiclex_id", ext.id);
             
             if (ext.uploadedDocumentTypes) {
               setUploadedDocs(new Set(ext.uploadedDocumentTypes));
@@ -332,8 +332,8 @@ export function CandidateFormPublic({ clientId, clientName }: CandidateFormPubli
         body: JSON.stringify({ step: "COMPLETED" })
       });
       setSubmitted(true);
-      localStorage.removeItem("cruxdoc_token");
-      localStorage.removeItem("cruxdoc_id");
+      localStorage.removeItem("aiclex_token");
+      localStorage.removeItem("aiclex_id");
     } catch (e) {
       console.error(e);
     } finally {

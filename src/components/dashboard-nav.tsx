@@ -48,7 +48,7 @@ export function DashboardNav({ email, role, vendorName }: { email: string; role:
     <>
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 bg-background border-b sticky top-0 z-30">
-        <h1 className="font-bold text-xl text-primary tracking-tight">CruxDoc</h1>
+        <h1 className="font-bold text-xl text-primary tracking-tight">AICLEX</h1>
         <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
@@ -71,10 +71,10 @@ export function DashboardNav({ email, role, vendorName }: { email: string; role:
         <div className="p-8 border-b">
           <Link href="/dashboard" className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-primary-foreground font-bold group-hover:scale-110 transition-transform">
-              C
+              A
             </div>
             <div>
-              <h1 className="font-bold text-xl tracking-tight">CruxDoc</h1>
+              <h1 className="font-bold text-xl tracking-tight">AICLEX</h1>
               <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-[0.2em]">
                 {role} Portal
               </p>

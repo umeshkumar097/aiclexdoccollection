@@ -18,31 +18,31 @@ export function AnimatedBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden bg-black pointer-events-none">
+    <div className="fixed inset-0 z-0 overflow-hidden bg-[#fafafa] pointer-events-none">
       {/* Geometric Cyber Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       {/* Massive Ambient Core Glows */}
-      <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-blue-600/20 blur-[120px] rounded-full mix-blend-screen" />
-      <div className="absolute top-1/2 right-1/4 w-[600px] h-[600px] bg-indigo-600/10 blur-[150px] rounded-full mix-blend-screen" />
+      <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-blue-400/10 blur-[120px] rounded-full mix-blend-multiply" />
+      <div className="absolute top-1/2 right-1/4 w-[600px] h-[600px] bg-indigo-400/5 blur-[150px] rounded-full mix-blend-multiply" />
 
       {/* Cryptographic Data Streams */}
       {streams.map((stream) => (
         <div
           key={stream.id}
-          className="absolute top-[-200px] w-[2px] bg-gradient-to-b from-transparent via-blue-500 to-cyan-300"
+          className="absolute top-[-200px] w-[1px] bg-gradient-to-b from-transparent via-blue-400 to-indigo-300"
           style={{
             left: stream.left,
             height: stream.height,
             animation: `dataDrop ${stream.duration} linear ${stream.delay} infinite`,
-            opacity: 0.8,
-            boxShadow: "0 0 20px 2px rgba(59, 130, 246, 0.5)"
+            opacity: 0.4,
+            boxShadow: "0 0 15px 1px rgba(59, 130, 246, 0.2)"
           }}
         />
       ))}
 
       {/* Bottom fade out guard */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black via-black/80 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#fafafa] via-[#fafafa]/80 to-transparent" />
 
       {/* Global CSS Animation for the Streams */}
       <style>{`
