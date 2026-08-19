@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AICLEX Portal - Official Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --sidebar-bg: #0f172a;
+            --sidebar-text: #94a3b8;
+            --sidebar-active: #ffffff;
+            --bg-color: #f8fafc;
+            --text-main: #334155;
+            --text-heading: #0f172a;
+            --border: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { display: flex; height: 100vh; background-color: var(--bg-color); color: var(--text-main); overflow: hidden; }
+        
+        /* Sidebar */
+        .sidebar { width: 300px; background-color: var(--sidebar-bg); color: var(--sidebar-text); display: flex; flex-direction: column; height: 100%; flex-shrink: 0; }
+        .logo { padding: 30px; font-size: 24px; font-weight: 800; color: white; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo span { background: var(--primary); padding: 5px 12px; border-radius: 8px; font-size: 18px; }
+        .nav-links { padding: 20px 0; overflow-y: auto; flex: 1; }
+        .nav-item { padding: 15px 30px; cursor: pointer; transition: all 0.3s ease; border-left: 4px solid transparent; font-weight: 600; font-size: 15px; }
+        .nav-item:hover { color: var(--sidebar-active); background: rgba(255,255,255,0.05); }
+        .nav-item.active { color: var(--sidebar-active); border-left-color: var(--primary); background: rgba(37, 99, 235, 0.1); }
+        
+        /* Content Area */
+        .main-content { flex: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .content-container { flex: 1; padding: 50px; overflow-y: auto; scroll-behavior: smooth; }
+        .section { display: none; animation: fadeIn 0.4s ease; max-width: 900px; margin: 0 auto; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Typography & Elements */
+        h1 { color: var(--text-heading); font-size: 36px; font-weight: 800; margin-bottom: 20px; letter-spacing: -0.5px; }
+        h2 { color: var(--text-heading); font-size: 24px; margin: 30px 0 15px; font-weight: 600; }
+        p { line-height: 1.7; margin-bottom: 15px; font-size: 16px; color: #475569; }
+        ul, ol { margin-left: 20px; margin-bottom: 20px; line-height: 1.7; color: #475569; }
+        li { margin-bottom: 8px; }
+        
+        code { background: #e2e8f0; color: #b91c1c; padding: 3px 8px; border-radius: 4px; font-size: 14px; font-family: monospace; }
+        pre { background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: 12px; overflow-x: auto; margin-bottom: 20px; font-size: 14px; line-height: 1.5; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        
+        .alert { background: #dbeafe; border-left: 4px solid var(--primary); padding: 15px 20px; border-radius: 0 8px 8px 0; margin-bottom: 20px; }
+        .alert-warning { background: #fef9c3; border-left-color: #eab308; }
+        
+        /* Navigation Buttons */
+        .bottom-nav { background: white; padding: 20px 50px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .btn { padding: 12px 24px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .btn-prev { background: white; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-prev:hover { background: #f1f5f9; }
+        .btn-next { background: var(--primary); color: white; }
+        .btn-next:hover { background: var(--primary-hover); transform: translateX(2px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <span>🛡️</span> AICLEX Docs
+        </div>
+        <div class="nav-links">
+            <div class="nav-item active" onclick="goToStep(0)">1. Introduction</div>
+            <div class="nav-item" onclick="goToStep(1)">2. Prerequisites</div>
+            <div class="nav-item" onclick="goToStep(2)">3. Getting Credentials</div>
+            <div class="nav-item" onclick="goToStep(3)">4. Local Installation</div>
+            <div class="nav-item" onclick="goToStep(4)">5. The Setup Wizard</div>
+            <div class="nav-item" onclick="goToStep(5)">6. Vercel Deployment</div>
+            <div class="nav-item" onclick="goToStep(6)">7. Support & Contact</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-container" id="scrollArea">
+            
+            <!-- Section 1: Intro -->
+            <div class="section active" id="sec-0">
+                <h1>Welcome to AICLEX Portal</h1>
+                <p>Thank you for purchasing the <strong>AICLEX Enterprise Document Collection & Verification Portal</strong>. You have made an excellent choice!</p>
+                <p>We have designed this portal using cutting-edge technologies to ensure top-notch performance, security, and scalability. Furthermore, we built an incredible <strong>Visual Setup Wizard</strong> that installs your database and configures your app without you needing to write a single line of code.</p>
+                
+                <div class="alert">
+                    <strong>Tech Stack Overview:</strong>
+                    <ul>
+                        <li><strong>Framework:</strong> Next.js 14 (App Router)</li>
+                        <li><strong>Database:</strong> PostgreSQL (via Prisma ORM)</li>
+                        <li><strong>Styling:</strong> Tailwind CSS & Shadcn UI</li>
+                        <li><strong>Storage:</strong> Cloudflare R2 (AWS S3 Compatible)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2: Prerequisites -->
+            <div class="section" id="sec-1">
+                <h1>System Prerequisites</h1>
+                <p>Before you begin the installation, please ensure your system meets the following requirements:</p>
+                <ul>
+                    <li><strong>Node.js:</strong> Version 18.x or 20.x installed.</li>
+                    <li><strong>NPM:</strong> Node Package Manager (comes with Node.js).</li>
+                    <li><strong>Database:</strong> A PostgreSQL Database (Free on Neon.tech or Supabase).</li>
+                    <li><strong>Code Editor:</strong> Visual Studio Code (Recommended).</li>
+                </ul>
+                <div class="alert alert-warning">
+                    <strong>Note:</strong> You do NOT need XAMPP, Apache, or PHP for this software. This is a modern Node.js application.
+                </div>
+            </div>
+
+            <!-- Section 3: Credentials -->
+            <div class="section" id="sec-2">
+                <h1>Getting Your Credentials</h1>
+                <p>To use the Automated Wizard, you need to collect a few keys first.</p>
+                
+                <h2>1. Envato Purchase Code</h2>
+                <ol>
+                    <li>Log in to your CodeCanyon account.</li>
+                    <li>Go to your <strong>Downloads</strong> page.</li>
+                    <li>Click Download next to AICLEX and select <strong>License certificate & purchase code</strong>.</li>
+                    <li>Copy your Purchase Code.</li>
+                </ol>
+
+                <h2>2. PostgreSQL Database URL</h2>
+                <ol>
+                    <li>Create a free account on <a href="https://neon.tech" target="_blank" style="color:var(--primary)">Neon.tech</a>.</li>
+                    <li>Create a new project.</li>
+                    <li>Copy the Connection String. It should look like: <br><code>postgresql://user:password@host/db?sslmode=require</code></li>
+                </ol>
+
+                <h2>3. Cloudflare R2 Storage Keys</h2>
+                <ol>
+                    <li>Log in to Cloudflare and go to <strong>R2 Object Storage</strong>.</li>
+                    <li>Create a new bucket.</li>
+                    <li>Click <strong>Manage R2 API Tokens</strong> and generate a token with Read/Write access.</li>
+                    <li>Copy the <strong>Access Key</strong>, <strong>Secret Key</strong>, and <strong>Endpoint URL</strong>.</li>
+                </ol>
+            </div>
+
+            <!-- Section 4: Installation -->
+            <div class="section" id="sec-3">
+                <h1>Local Installation</h1>
+                <p>Once you have extracted the ZIP file you downloaded from CodeCanyon, follow these steps:</p>
+                
+                <h2>Step 1: Install Dependencies</h2>
+                <p>Open your terminal (inside the extracted folder) and run:</p>
+                <pre>npm install</pre>
+
+                <h2>Step 2: Start the Server</h2>
+                <p>After installation completes, start the Next.js server:</p>
+                <pre>npm run dev</pre>
+
+                <h2>Step 3: Open in Browser</h2>
+                <p>Open Google Chrome or Safari and navigate to:</p>
+                <pre>http://localhost:3000</pre>
+                <p>You will automatically be redirected to the AICLEX Setup Wizard!</p>
+            </div>
+
+            <!-- Section 5: The Wizard -->
+            <div class="section" id="sec-4">
+                <h1>The AICLEX Setup Wizard</h1>
+                <p>When you open the app in your browser for the first time, you will see a beautiful 4-step installation screen.</p>
+                
+                <h2>Step 1: License Verification</h2>
+                <p>Enter the <strong>Envato Purchase Code</strong> you copied earlier. Our system will securely verify your license and unlock the installer.</p>
+
+                <h2>Step 2: Database Connection</h2>
+                <p>Paste your <strong>PostgreSQL Database URL</strong>. Click Connect. The system will automatically create all the necessary tables in your database. No manual setup required!</p>
+
+                <h2>Step 3: Storage Configuration</h2>
+                <p>Enter your <strong>Cloudflare R2 Keys</strong>. The system will ping your storage bucket to ensure the keys are correct.</p>
+
+                <h2>Step 4: Admin Account</h2>
+                <p>Create your Admin Email and Password. Once you click Finish, the system will save everything securely and redirect you to the Login screen.</p>
+            </div>
+
+            <!-- Section 6: Vercel -->
+            <div class="section" id="sec-5">
+                <h1>Deploying to Vercel (Production)</h1>
+                <p>Hosting this application is incredibly simple using Vercel.</p>
+                <ol>
+                    <li>Upload your configured project folder to a <strong>Private GitHub Repository</strong>.</li>
+                    <li>Go to <a href="https://vercel.com" target="_blank" style="color:var(--primary)">Vercel.com</a> and click <strong>Add New Project</strong>.</li>
+                    <li>Import your GitHub repository.</li>
+                    <li>Before clicking Deploy, open the <strong>Environment Variables</strong> tab.</li>
+                    <li>Copy all the keys from your local <code>.env</code> file (which the wizard created for you) and paste them into Vercel.</li>
+                    <li>Click <strong>Deploy</strong>!</li>
+                </ol>
+            </div>
+
+            <!-- Section 7: Support -->
+            <div class="section" id="sec-6">
+                <h1>Support & Contact</h1>
+                <p>We take pride in providing exceptional support to our buyers.</p>
+                <div class="alert">
+                    <strong>Need Help?</strong><br>
+                    If you face any issues during the installation, please open a support ticket on our CodeCanyon item page.
+                </div>
+                <p>Our technical team will respond to your query within 24-48 hours. Please make sure to include your Envato Purchase Code when requesting support.</p>
+                <br><br><br>
+            </div>
+            
+        </div>
+
+        <!-- Bottom Navigation Buttons -->
+        <div class="bottom-nav">
+            <button class="btn btn-prev" id="btnPrev" onclick="prevStep()">← Previous Step</button>
+            <button class="btn btn-next" id="btnNext" onclick="nextStep()">Next Step →</button>
+        </div>
+    </div>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        const totalSteps = 7;
+        let currentStep = 0;
+
+        function updateUI() {
+            // Update Sidebar Active State
+            document.querySelectorAll('.nav-item').forEach((el, index) => {
+                if(index === currentStep) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+
+            // Update Content Visibility
+            document.querySelectorAll('.section').forEach((el, index) => {
+                if(index === currentStep) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+
+            // Scroll to top of content
+            document.getElementById('scrollArea').scrollTop = 0;
+
+            // Update Buttons
+            document.getElementById('btnPrev').disabled = (currentStep === 0);
+            
+            const btnNext = document.getElementById('btnNext');
+            if (currentStep === totalSteps - 1) {
+                btnNext.style.display = 'none';
+            } else {
+                btnNext.style.display = 'flex';
+                btnNext.innerHTML = 'Next Step →';
+            }
+        }
+
+        function goToStep(index) {
+            currentStep = index;
+            updateUI();
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1) {
+                currentStep++;
+                updateUI();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateUI();
+            }
+        }
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>
