@@ -203,3 +203,167 @@ enum CurrentStep {
   UPLOADING_DOCS
   COMPLETED
 }
+
+// ─────────────────────────────────────────────
+// SAAS MULTI-TENANT MODELS
+// ─────────────────────────────────────────────
+
+model Organization {
+  id                    String        @id @default(cuid())
+  name                  String
+  slug                  String        @unique
+  plan                  OrgPlan       @default(TRIAL)
+  subscription_status   SubStatus     @default(TRIAL)
+  trial_ends_at         DateTime
+  billing_cycle_end     DateTime?
+  cashfree_sub_id       String?
+  logo_url              String?
+  brand_color           String        @default("#2563eb")
+  email_provider        EmailProvider @default(AICLEX)
+  smtp_host             String?
+  smtp_port             Int?
+  smtp_user             String?
+  smtp_pass             String?
+  resend_api_key        String?
+  from_email            String?
+  candidates_this_month Int           @default(0)
+  storage_used_gb       Float         @default(0)
+  is_suspended          Boolean       @default(false)
+  owner_email           String
+  owner_name            String
+  users                 OrgUser[]
+  campaigns             Campaign[]
+  org_candidates        OrgCandidate[]
+  audit_logs            AuditLog[]
+  created_at            DateTime      @default(now())
+  updated_at            DateTime      @updatedAt
+}
+
+model OrgUser {
+  id          String       @id @default(cuid())
+  org_id      String
+  org         Organization @relation(fields: [org_id], references: [id])
+  email       String
+  password    String
+  name        String
+  role        OrgRole      @default(REVIEWER)
+  totp_secret String?
+  is_active   Boolean      @default(true)
+  last_login  DateTime?
+  created_at  DateTime     @default(now())
+
+  @@unique([org_id, email])
+}
+
+model PlanConfig {
+  id                       String   @id @default(cuid())
+  plan                     OrgPlan  @unique
+  max_users                Int
+  max_candidates_per_month Int
+  max_storage_gb           Float
+  max_campaigns            Int
+  whatsapp_button          Boolean
+  custom_branding          Boolean
+  ai_validation            Boolean
+  audit_logs_enabled       Boolean
+  api_access               Boolean
+  custom_smtp              Boolean
+  two_fa                   Boolean
+  price_monthly            Int
+  updated_at               DateTime @updatedAt
+}
+
+model Campaign {
+  id             String         @id @default(cuid())
+  org_id         String
+  org            Organization   @relation(fields: [org_id], references: [id])
+  name           String
+  slug           String
+  description    String?
+  required_docs  Json           @default("[]")
+  is_active      Boolean        @default(true)
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  org_candidates OrgCandidate[]
+
+  @@unique([org_id, slug])
+}
+
+model OrgCandidate {
+  id          String             @id @default(cuid())
+  org_id      String
+  org         Organization       @relation(fields: [org_id], references: [id])
+  campaign_id String
+  campaign    Campaign           @relation(fields: [campaign_id], references: [id])
+  token       String             @unique @default(uuid())
+  name        String?
+  email       String?
+  phone       String?
+  status      OrgCandidateStatus @default(PENDING)
+  documents   OrgDocument[]
+  notes       String?
+  created_at  DateTime           @default(now())
+  updated_at  DateTime           @updatedAt
+}
+
+model OrgDocument {
+  id               String           @id @default(cuid())
+  org_candidate_id String
+  org_candidate    OrgCandidate     @relation(fields: [org_candidate_id], references: [id])
+  doc_type         String
+  file_url         String
+  size_kb          Int
+  status           DocumentStatus   @default(PENDING)
+  rejection_reason String?
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @updatedAt
+}
+
+model AuditLog {
+  id         String       @id @default(cuid())
+  org_id     String
+  org        Organization @relation(fields: [org_id], references: [id])
+  user_id    String?
+  action     String
+  details    Json?
+  ip_address String?
+  created_at DateTime     @default(now())
+}
+
+model SuperAdmin {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+}
+
+enum OrgPlan {
+  TRIAL
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+enum SubStatus {
+  TRIAL
+  ACTIVE
+  GRACE
+  EXPIRED
+  CANCELLED
+}
+enum OrgRole {
+  ORG_ADMIN
+  REVIEWER
+  VIEWER
+}
+enum EmailProvider {
+  AICLEX
+  SMTP
+  RESEND
+}
+enum OrgCandidateStatus {
+  PENDING
+  DOCS_COMPLETE
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
