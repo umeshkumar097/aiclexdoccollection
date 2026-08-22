@@ -235,6 +235,7 @@ model Organization {
   campaigns             Campaign[]
   org_candidates        OrgCandidate[]
   audit_logs            AuditLog[]
+  api_keys              ApiKey[]
   created_at            DateTime      @default(now())
   updated_at            DateTime      @updatedAt
 }
@@ -366,4 +367,16 @@ enum OrgCandidateStatus {
   UNDER_REVIEW
   APPROVED
   REJECTED
+}
+
+model ApiKey {
+  id         String       @id @default(cuid())
+  org_id     String
+  org        Organization @relation(fields: [org_id], references: [id])
+  name       String
+  key_hash   String       @unique
+  key_prefix String
+  last_used  DateTime?
+  is_active  Boolean      @default(true)
+  created_at DateTime     @default(now())
 }
