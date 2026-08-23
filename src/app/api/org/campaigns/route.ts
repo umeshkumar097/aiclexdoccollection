@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Name and at least one required document are needed." }, { status: 400 });
     }
 
-    await checkPlanLimit(orgId, "CREATE_CAMPAIGN");
+    await checkPlanLimit(orgId, "ADD_CAMPAIGN");
 
     const slug = await uniqueSlug(generateSlug(name), orgId);
 

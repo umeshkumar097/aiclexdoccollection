@@ -282,6 +282,7 @@ model Campaign {
   slug           String
   description    String?
   required_docs  Json           @default("[]")
+  deadline       DateTime?
   is_active      Boolean        @default(true)
   created_at     DateTime       @default(now())
   updated_at     DateTime       @updatedAt
