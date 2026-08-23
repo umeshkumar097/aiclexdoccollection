@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const ACTION_BADGE: Record<string, string> = {
@@ -13,6 +14,8 @@ const ACTION_BADGE: Record<string, string> = {
 
 export default function AuditLogsPage() {
   const [logs, setLogs] = useState<any[]>([]);
+  const { data: session } = useSession();
+  const orgId = (session?.user as any)?.orgId ?? "";
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
@@ -20,8 +23,9 @@ export default function AuditLogsPage() {
   const [upgradeRequired, setUpgradeRequired] = useState(false);
 
   useEffect(() => {
+    if (!orgId) return;
     setLoading(true);
-    fetch(`/api/org/audit-logs?orgId=REPLACE_WITH_ORG_ID&page=${page}`)
+    fetch(`/api/org/audit-logs?orgId=${orgId}&page=${page}`)
       .then((r) => r.json())
       .then((d) => {
         if (d.upgrade) { setUpgradeRequired(true); return; }

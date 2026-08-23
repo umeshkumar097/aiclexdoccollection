@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function ApiKeysPage() {
@@ -8,7 +9,8 @@ export default function ApiKeysPage() {
   const [creating, setCreating] = useState(false);
   const [newKey, setNewKey] = useState<string | null>(null);
   const [upgradeRequired, setUpgradeRequired] = useState(false);
-  const ORG_ID = "REPLACE_WITH_ORG_ID";
+  const { data: session } = useSession();
+  const ORG_ID = (session?.user as any)?.orgId ?? "";
 
   const fetchKeys = () => {
     setLoading(true);

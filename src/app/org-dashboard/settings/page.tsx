@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function SettingsPage() {
@@ -20,7 +21,7 @@ export default function SettingsPage() {
     await fetch("/api/org/settings/email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ orgId: "REPLACE_WITH_ORG_ID", ...body }),
+      body: JSON.stringify({ orgId: (session?.user as any)?.orgId, ...body }),
     });
     setSaved(true); setSaving(false);
     setTimeout(() => setSaved(false), 3000);
