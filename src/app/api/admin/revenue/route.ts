@@ -23,16 +23,17 @@ export async function GET(req: NextRequest) {
     const priceMap: Record<string, number> = {};
     for (const p of planConfigs) priceMap[p.plan] = p.price_monthly;
 
-    const mrr = allOrgs.reduce((sum, o) => sum + (priceMap[o.plan] ?? 0), 0);
+    const mrr = allOrgs.reduce((sum: number, o: { plan: string }) => sum + (priceMap[o.plan] ?? 0), 0);
 
     const counts = await prisma.organization.groupBy({
       by: ["subscription_status"],
       _count: true,
     });
 
-    const trialCount = counts.find((c) => c.subscription_status === "TRIAL")?._count ?? 0;
-    const activeCount = counts.find((c) => c.subscription_status === "ACTIVE")?._count ?? 0;
-    const expiredCount = counts.find((c) => c.subscription_status === "EXPIRED")?._count ?? 0;
+    type CountRow = { subscription_status: string; _count: number };
+    const trialCount   = counts.find((c: CountRow) => c.subscription_status === "TRIAL")?._count   ?? 0;
+    const activeCount  = counts.find((c: CountRow) => c.subscription_status === "ACTIVE")?._count  ?? 0;
+    const expiredCount = counts.find((c: CountRow) => c.subscription_status === "EXPIRED")?._count ?? 0;
 
     return NextResponse.json({
       mrr,

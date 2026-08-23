@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { createCashfreeSubscription } from "@/lib/cashfree";
-import { getServerSession } from "next-auth";
 
 const PLAN_TO_CF_ID: Record<string, string> = {
   STARTER:      process.env.CF_PLAN_STARTER      ?? "nexdoc_starter",

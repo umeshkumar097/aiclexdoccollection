@@ -54,14 +54,17 @@ export async function GET(req: NextRequest) {
     };
     for (const s of statusCounts) statusMap[s.status] = s._count;
 
+    type CampaignRow = typeof campaigns[number];
+    type CandidateRow = typeof recentCandidates[number];
+
     return NextResponse.json({
       totalCandidates,
       statusMap,
-      campaigns: campaigns.map((c) => ({
+      campaigns: campaigns.map((c: CampaignRow) => ({
         id: c.id, name: c.name, slug: c.slug,
         count: c._count.org_candidates, is_active: c.is_active,
       })),
-      recentActivity: recentCandidates.map((c) => ({
+      recentActivity: recentCandidates.map((c: CandidateRow) => ({
         id: c.id, name: c.name, status: c.status,
         campaign: c.campaign.name, created_at: c.created_at,
       })),

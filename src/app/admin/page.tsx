@@ -32,9 +32,10 @@ export default async function AdminDashboard() {
   const priceMap: Record<string, number> = {};
   for (const p of planConfigs) priceMap[p.plan] = p.price_monthly;
 
-  const activeOrgs = orgs.filter((o) => o.subscription_status === "ACTIVE");
-  const trialOrgs = orgs.filter((o) => o.subscription_status === "TRIAL");
-  const mrr = activeOrgs.reduce((sum, o) => sum + (priceMap[o.plan] ?? 0), 0);
+  type OrgItem = (typeof orgs)[number];
+  const activeOrgs = orgs.filter((o: OrgItem) => o.subscription_status === "ACTIVE");
+  const trialOrgs  = orgs.filter((o: OrgItem) => o.subscription_status === "TRIAL");
+  const mrr = activeOrgs.reduce((sum: number, o: OrgItem) => sum + (priceMap[o.plan] ?? 0), 0);
 
   const stats = [
     { label: "Total Organizations", value: orgs.length.toString() },
@@ -76,7 +77,7 @@ export default async function AdminDashboard() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {orgs.map((org) => (
+            {orgs.map((org: OrgItem) => (
               <tr key={org.id} className="hover:bg-slate-50">
                 <td className="px-6 py-4">
                   <p className="font-semibold text-slate-900">{org.name}</p>
