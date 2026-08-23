@@ -27,7 +27,15 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid credentials. Please try again.");
       } else {
-        router.push("/dashboard");
+        // Fetch session to check user type
+        const { getSession } = await import("next-auth/react");
+        const session = await getSession();
+        const userType = (session?.user as any)?.userType;
+        if (userType === "ORG_USER") {
+          router.push("/org-dashboard");
+        } else {
+          router.push("/dashboard");
+        }
         router.refresh();
       }
     } catch (err) {
@@ -55,12 +63,18 @@ export default function LoginPage() {
         <div className="glass-card p-8 md:p-10 rounded-3xl">
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold tracking-tight text-foreground mb-2">
-              AICLEX Portal
+              Nexdoc
             </h1>
             <p className="text-muted-foreground text-sm uppercase tracking-widest font-medium">
-              Admin Access
+              Sign In to Your Account
             </p>
           </div>
+
+          {typeof window !== "undefined" && new URLSearchParams(window.location.search).get("registered") === "1" && (
+            <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-700 text-sm text-center">
+              Account created successfully. Please sign in.
+            </div>
+          )}
 
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center animate-in fade-in slide-in-from-top-2">
