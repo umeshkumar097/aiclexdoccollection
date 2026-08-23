@@ -6,10 +6,12 @@ export default function ApplyForm({
   campaignSlug,
   requiredDocs,
   brandColor,
+  orgName,
 }: {
   campaignSlug: string;
   requiredDocs: string[];
   brandColor: string;
+  orgName: string;
 }) {
   const router = useRouter();
   const [name, setName]   = useState("");
@@ -22,7 +24,6 @@ export default function ApplyForm({
     e.preventDefault();
     setError("");
     if (!name.trim()) { setError("Please enter your full name."); return; }
-
     setLoading(true);
     try {
       const res = await fetch("/api/apply", {
@@ -32,7 +33,6 @@ export default function ApplyForm({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-      // Redirect to personal upload page
       router.push(`/c/${data.token}`);
     } catch (err: any) {
       setError(err.message ?? "Something went wrong. Please try again.");
@@ -41,68 +41,100 @@ export default function ApplyForm({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6">
-      <p className="font-bold text-slate-900 mb-1">Your Details</p>
-      <p className="text-slate-500 text-sm mb-5">
-        Enter your details to start uploading your documents.
-      </p>
-
-      {error && (
-        <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl">
-          {error}
+    <div className="space-y-5">
+      {/* What to expect */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-5">
+        <p className="font-semibold text-slate-800 text-sm mb-3">You will need to upload {requiredDocs.length} document{requiredDocs.length !== 1 ? "s" : ""}:</p>
+        <div className="space-y-2">
+          {requiredDocs.map((doc, i) => (
+            <div key={doc} className="flex items-center gap-3 text-sm text-slate-600">
+              <span
+                className="w-5 h-5 rounded-full text-white text-xs font-bold flex items-center justify-center shrink-0"
+                style={{ backgroundColor: brandColor }}
+              >
+                {i + 1}
+              </span>
+              {doc}
+            </div>
+          ))}
         </div>
-      )}
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-            Full Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Rahul Kumar"
-            className="w-full h-11 px-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2"
-            style={{ "--tw-ring-color": brandColor } as any}
-          />
-        </div>
+      {/* Entry Form */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-6">
+        <p className="font-bold text-slate-900 mb-1">Enter your details to begin</p>
+        <p className="text-slate-500 text-sm mb-5">
+          {orgName} needs your basic information before you can upload documents.
+        </p>
 
-        <div>
-          <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-            Email Address <span className="text-slate-400 font-normal">(Optional)</span>
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="rahul@example.com"
-            className="w-full h-11 px-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        {error && (
+          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm font-medium px-4 py-3 rounded-xl">
+            {error}
+          </div>
+        )}
 
-        <div>
-          <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-            Phone Number <span className="text-slate-400 font-normal">(Optional)</span>
-          </label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="+91 98765 43210"
-            className="w-full h-11 px-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">
+              Full Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              autoFocus
+              placeholder="e.g. Rahul Kumar"
+              className="w-full h-11 px-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ backgroundColor: brandColor }}
-          className="w-full h-12 text-white font-bold rounded-xl text-sm transition-opacity hover:opacity-90 disabled:opacity-60 mt-2"
-        >
-          {loading ? "Please wait..." : `Start Uploading — ${requiredDocs.length} Documents Required`}
-        </button>
-      </form>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">
+                Email <span className="text-slate-400 font-normal normal-case">(Optional)</span>
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="rahul@example.com"
+                className="w-full h-11 px-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 uppercase tracking-wide mb-1.5">
+                Phone <span className="text-slate-400 font-normal normal-case">(Optional)</span>
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+91 98765 43210"
+                className="w-full h-11 px-4 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full h-12 text-white font-bold rounded-xl text-sm transition-opacity hover:opacity-90 disabled:opacity-60 mt-2 flex items-center justify-center gap-2"
+            style={{ backgroundColor: brandColor }}
+          >
+            {loading ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Please wait...
+              </>
+            ) : (
+              "Continue to Upload Documents"
+            )}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
